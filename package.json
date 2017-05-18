@@ -1,15 +1,15 @@
 {
-    "name": "never-empty",
-    "version": "0.0.2",
-    "description": "...",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/andre-lima/Never-Empty"
-    },
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Andre Dantas <andre.dantas.lima@gmail.com> (www.andredantas.com)",
-    "license": "MIT"
+  "name": "never-empty",
+  "version": "0.0.3",
+  "description": "...",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andre-lima/Never-Empty"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andre Dantas <andre.dantas.lima@gmail.com> (www.andredantas.com)",
+  "license": "MIT"
 }
