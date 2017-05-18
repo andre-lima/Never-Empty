@@ -1,46 +1,54 @@
 const fs = require('fs');
 
-let walkTree = function walkTree(path, opts) {
-    console.log(path);
-    let elements = fs.readdirSync(path);
-    let fileCount = 0;
+const walkTree = function walkTree(opts) {
+    const path = opts.root;
+    const ignored = opts.ignore;
+    const create = opts.create;
+    const countFolders = opts.countFoldersAsFiles;
+    const fileName = opts.file;
 
-    while (elements.length > 0) {
-        let element = elements.pop();
-        let elementPath = path + '/' + element;
+    walkTreeRecursive(path);
 
-        if (opts.ignore.includes(element)) {
-            console.log('Found ignored folder:', element);
-            continue;
-        }
+    function walkTreeRecursive(path) {
+        let elements = fs.readdirSync(path);
+        let fileCount = 0;
 
-        let stat = fs.statSync(elementPath);
+        while (elements.length > 0) {
+            let element = elements.pop();
+            let elementPath = path + '/' + element;
 
-        if (stat.isDirectory()) {
-            if (opts.create && opts.countFolders) {
+            if (ignored.includes(element)) {
+                continue;
+            }
+
+            let stat = fs.statSync(elementPath);
+            if (stat.isDirectory()) {
+                if (create && countFolders) {
+                    fileCount++;
+                }
+
+                walkTreeRecursive(elementPath);
+
+            } else if (stat.isFile()) {
                 fileCount++;
+
+                if (!create && element === fileName) {
+                    fs.unlinkSync(elementPath);
+                }
+
+            } else {
+                return;
             }
-
-            walkTree(elementPath, opts);
-
-        } else if (stat.isFile()) {
-            fileCount++;
-
-            if (!opts.create && element === opts.fileName) {
-                fs.unlinkSync(elementPath);
-            }
-
-        } else {
-            return;
         }
+
+        // Creates a file
+        if (create && fileCount === 0) {
+            fs.closeSync(fs.openSync(path + '/' + fileName, 'w'));
+        }
+
+        return;
     }
 
-    // Creates a file
-    if (opts.create && fileCount === 0) {
-        fs.closeSync(fs.openSync(path + '/' + fileName, 'w'));
-    }
-
-    return;
 }
 
 module.exports = walkTree;

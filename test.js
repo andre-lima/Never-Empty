@@ -1,3 +1,8 @@
-const w = require ('./index.js');
+const w = require('./index.js');
 
-w();
+w.setOptions({
+    root: './src'
+});
+w.setOptions();
+w.showOptions();
+w.remove();
