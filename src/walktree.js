@@ -17,34 +17,31 @@ const walkTree = function walkTree(opts) {
             let element = elements.pop();
             let elementPath = path + '/' + element;
 
-            if (ignored.includes(element)) {
+            // Skip ignored folder and tries next folder in line
+            if (ignored.includes(element))
                 continue;
-            }
 
             let stat = fs.statSync(elementPath);
             if (stat.isDirectory()) {
-                if (create && countFolders) {
+                if (create && countFolders)
                     fileCount++;
-                }
 
                 walkTreeRecursive(elementPath);
 
             } else if (stat.isFile()) {
                 fileCount++;
 
-                if (!create && element === fileName) {
+                if (!create && element === fileName)
                     fs.unlinkSync(elementPath);
-                }
 
             } else {
                 return;
             }
-        }
+        } // end of While loop
 
         // Creates a file
-        if (create && fileCount === 0) {
+        if (create && fileCount === 0)
             fs.closeSync(fs.openSync(path + '/' + fileName, 'w'));
-        }
 
         return;
     }
