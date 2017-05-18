@@ -1,17 +1,15 @@
 {
-  "name": "never-empty",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Andre Dantas <andre.dantas.lima@gmail.com> (www.andredantas.com)",
-  "license": "ISC",
-  "dependencies": {
-    "create-file": "^1.0.1",
-    "extfs": "0.0.7",
-    "touch": "^1.0.0",
-    "walk": "^2.3.9"
-  }
+    "name": "never-empty",
+    "version": "0.0.2",
+    "description": "...",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/andre-lima/Never-Empty"
+    },
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Andre Dantas <andre.dantas.lima@gmail.com> (www.andredantas.com)",
+    "license": "MIT"
 }
