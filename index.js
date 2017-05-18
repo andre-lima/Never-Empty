@@ -28,8 +28,7 @@ var startModule = (function startModule() {
             options.create = false;
             walkTree(options);
         },
-        refresh: function refresh() {
-            this.remove();
+        create: function create() {
             options.create = true;
             walkTree(options);
         }
