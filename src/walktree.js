@@ -1,49 +1,60 @@
-const fs = require('fs');
+var fs = require('fs');
+var path = require('path');
 
-const walkTree = function walkTree(opts) {
-    const path = opts.root;
-    const ignored = opts.ignore;
-    const create = opts.create;
-    const countFolders = opts.countFoldersAsFiles;
-    const fileName = opts.file;
 
-    walkTreeRecursive(path);
+function walkTree (opts) {
+    var create = opts.create;
+    var ignored = opts.ignore;
+    var countFolders = opts.countFoldersAsFiles;
+    var nameOfPlaceholder = opts.file;
 
-    function walkTreeRecursive(path) {
-        let elements = fs.readdirSync(path);
-        let fileCount = 0;
+    walkTreeRecursive(opts.root);
 
-        while (elements.length > 0) {
-            let element = elements.pop();
-            let elementPath = path + '/' + element;
+    function walkTreeRecursive(dirPath) {
+        fs.readdir(dirPath, function(err, elements) {
+            if (err) {
+              throw new Error('Failed to read the directory at: ' + dirPath);
+            }
 
-            // Skip ignored folder and tries next folder in line
-            if (ignored.includes(element))
-                continue;
+            var fileCount = 0;
 
-            let stat = fs.statSync(elementPath);
-            if (stat.isDirectory()) {
-                if (create && countFolders)
+            elements.forEach(function(element) {
+                var fullPathToElement = path.join(dirPath, element);
+
+                // Skip ignored folder and tries next folder in line
+                if (ignored.includes(element) || !fs.existsSync(fullPathToElement)) {
+                    return;
+                }
+
+                var stat = fs.statSync(fullPathToElement);
+                if (stat.isDirectory()) {
+                    if (create && countFolders) {
+                        fileCount++;
+                    }
+
+                    walkTreeRecursive(fullPathToElement);
+
+                } else if (stat.isFile()) {
                     fileCount++;
 
-                walkTreeRecursive(elementPath);
+                    if (!create && element === nameOfPlaceholder) {
+                        fs.unlink(fullPathToElement);
+                    }
 
-            } else if (stat.isFile()) {
-                fileCount++;
+                }
+            });
 
-                if (!create && element === fileName)
-                    fs.unlinkSync(elementPath);
-
-            } else {
-                return;
+            // Creates a file
+            if (create && fileCount === 0) {
+                var pathToPlaceholder = path.join(dirPath, nameOfPlaceholder);
+                fs.open(pathToPlaceholder, 'w', function(err, fd) {
+                  if (err) {
+                    throw new Error('Encountered an error while creating a file: ' + pathToPlaceholder);
+                  }
+                  fs.close(fd);
+                });
             }
-        } // end of While loop
-
-        // Creates a file
-        if (create && fileCount === 0)
-            fs.closeSync(fs.openSync(path + '/' + fileName, 'w'));
-
-        return;
+        });
     }
 
 }
