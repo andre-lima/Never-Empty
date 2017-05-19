@@ -5,7 +5,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var walkTree = require('./lib/walktree');
 
 var startModule = function startModule() {
-    var options = { // Default options
+    // Default options
+    var options = {
         root: './',
         file: '.gitkeep',
         create: true,
@@ -14,16 +15,11 @@ var startModule = function startModule() {
     };
 
     return {
-        setOptions: function setOptions(opts) {
-            if ((typeof opts === 'undefined' ? 'undefined' : _typeof(opts)) === 'object') {
-                for (var key in opts) {
-                    if (options.hasOwnProperty(key)) {
-                        options[key] = opts[key];
-                    }
-                }
-            } else {
+        setOptions: function setOptions(newOptions) {
+            if ((typeof newOptions === 'undefined' ? 'undefined' : _typeof(newOptions)) !== 'object') {
                 throw new Error('Options is not an object!');
             }
+            options = Object.assign({}, options, newOptions);
         },
         showOptions: function showOptions() {
             return options;

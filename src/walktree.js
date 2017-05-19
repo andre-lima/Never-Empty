@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-function walkTree (opts) {
+function walkTree(opts) {
     const create = opts.create;
     const ignored = opts.ignore;
     const countFolders = opts.countFoldersAsFiles;
@@ -10,14 +10,14 @@ function walkTree (opts) {
     walkTreeRecursive(opts.root);
 
     function walkTreeRecursive(dirPath) {
-        fs.readdir(dirPath, function(err, elements) {
+        fs.readdir(dirPath, function (err, elements) {
             if (err) {
-              throw new Error('Failed to read the directory at: ' + dirPath);
+                throw new Error('Failed to read the directory at: ' + dirPath);
             }
 
             var fileCount = 0;
 
-            elements.forEach(function(element) {
+            elements.forEach(function (element) {
                 var fullPathToElement = path.join(dirPath, element);
 
                 // Skip ignored folder and tries next folder in line
@@ -46,11 +46,11 @@ function walkTree (opts) {
             // Creates a file
             if (create && fileCount === 0) {
                 var pathToPlaceholder = path.join(dirPath, nameOfPlaceholder);
-                fs.open(pathToPlaceholder, 'w', function(err, fd) {
-                  if (err) {
-                    throw new Error('Encountered an error while creating a file: ' + pathToPlaceholder);
-                  }
-                  fs.close(fd);
+                fs.open(pathToPlaceholder, 'w', function (err, fd) {
+                    if (err) {
+                        throw new Error('Encountered an error while creating a file: ' + pathToPlaceholder);
+                    }
+                    fs.close(fd);
                 });
             }
         });

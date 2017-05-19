@@ -1,7 +1,8 @@
 var walkTree = require('./lib/walktree');
 
-var startModule = (function startModule() {
-    var options = { // Default options
+const startModule = (function startModule() {
+    // Default options
+    let options = {
         root: './',
         file: '.gitkeep',
         create: true,
@@ -10,25 +11,18 @@ var startModule = (function startModule() {
     };
 
     return {
-        setOptions: function setOptions(opts) {
-            if (typeof opts === 'object') {
-                for (var key in opts) {
-                    if (options.hasOwnProperty(key)) {
-                        options[key] = opts[key];
-                    }
-                }
-            } else {
+        setOptions: (newOptions) => {
+            if (typeof newOptions !== 'object') {
                 throw new Error('Options is not an object!');
             }
+            options = Object.assign({}, options, newOptions);
         },
-        showOptions: function showOptions() {
-            return options;
-        },
-        remove: function remove() {
+        showOptions: () => options,
+        remove: () => {
             options.create = false;
             walkTree(options);
         },
-        create: function create() {
+        create: () => {
             options.create = true;
             walkTree(options);
         }
