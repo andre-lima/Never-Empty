@@ -1,3 +1,6 @@
 /node_modules
+/src
 .eslintrc
 .editorconfig
+test.js
+gulpfile.js

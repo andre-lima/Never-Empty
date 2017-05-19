@@ -1,12 +1,11 @@
-var fs = require('fs');
-var path = require('path');
-
+import fs from 'fs';
+import path from 'path';
 
 function walkTree (opts) {
-    var create = opts.create;
-    var ignored = opts.ignore;
-    var countFolders = opts.countFoldersAsFiles;
-    var nameOfPlaceholder = opts.file;
+    const create = opts.create;
+    const ignored = opts.ignore;
+    const countFolders = opts.countFoldersAsFiles;
+    const nameOfPlaceholder = opts.file;
 
     walkTreeRecursive(opts.root);
 
