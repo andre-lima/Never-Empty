@@ -1,21 +1,17 @@
-'use strict';
+var walkTree = require('./lib/walktree');
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var walkTree = require('./walktree');
-
-var startModule = function startModule() {
+var startModule = (function startModule() {
     var options = { // Default options
         root: './',
         file: '.gitkeep',
         create: true,
         countFoldersAsFiles: false,
-        ignore: ['.git', 'node_modules', 'partial_modules']
+        ignore: ['.git', 'node_modules', 'partial_modules'],
     };
 
     return {
         setOptions: function setOptions(opts) {
-            if ((typeof opts === 'undefined' ? 'undefined' : _typeof(opts)) === 'object') {
+            if (typeof opts === 'object') {
                 for (var key in opts) {
                     if (options.hasOwnProperty(key)) {
                         options[key] = opts[key];
@@ -36,7 +32,7 @@ var startModule = function startModule() {
             options.create = true;
             walkTree(options);
         }
-    };
-}();
+    }
+}());
 
 module.exports = startModule;

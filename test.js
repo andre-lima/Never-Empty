@@ -1,4 +1,4 @@
-var ne = require('./lib/index');
+var ne = require('./index');
 
 console.log(ne.showOptions());
 ne.create();
