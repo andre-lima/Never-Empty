@@ -1,4 +1,5 @@
 var walkTree = require('./lib/walktree');
+//import * from './lib/walktree';
 
 const startModule = (function startModule() {
     // Default options

@@ -5,7 +5,7 @@ const babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
 
 gulp.task('index', function () {
-    return gulp.src('./src/index.js')
+    return gulp.src(['./src/index.js', './src/cli.js'])
         .pipe(babel({
             presets: ['es2015', 'es2017']
         }))
@@ -18,7 +18,7 @@ gulp.task('walktree', function () {
         .pipe(babel({
             presets: ['es2015', 'es2017']
         }))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest('./lib'))
 });
 
