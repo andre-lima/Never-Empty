@@ -1,21 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 
-//USING NODE 8 POLYFILL FOR PROMISIFY
-// **************************************
-/*const util = require('util');
-require('util.promisify').shim();
-
-const readFileAsync = util.promisify(fs.readFile);
-
-readFileAsync('./README.md', {encoding: 'utf8'})
-  .then((text) => {
-      console.log('CONTENT:', text);
-  })
-  .catch((err) => {
-      console.log('ERROR:', err);
-  });
-*/
 function walkTree(opts) {
     const create = opts.create;
     const ignored = opts.ignore;
